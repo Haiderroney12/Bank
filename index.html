@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>School Quiz</title>
+</head>
+<body>
+  <h1>My Quiz</h1>
+
+  <div id="quiz"></div>
+
+  <button onclick="nextQuestion()">Next</button>
+
+  <p id="score"></p>
+
+  <script>
+    const questions = [
+      {
+        q: "What is 2 + 2?",
+        a: ["3", "4", "5", "6"],
+        correct: 1
+      },
+      {
+        q: "What is the capital of Norway?",
+        a: ["Bergen", "Oslo", "Trondheim", "Stavanger"],
+        correct: 1
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    function showQuestion() {
+      let q = questions[current];
+      let html = "<h2>" + q.q + "</h2>";
+
+      for (let i = 0; i < q.a.length; i++) {
+        html += `<button onclick="checkAnswer(${i})">${q.a[i]}</button><br>`;
+      }
+
+      document.getElementById("quiz").innerHTML = html;
+    }
+
+    function checkAnswer(i) {
+      if (i === questions[current].correct) {
+        score++;
+      }
+      current++;
+      showQuestion();
+      updateScore();
+    }
+
+    function nextQuestion() {
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById("quiz").innerHTML = "<h2>Finished!</h2>";
+      }
+    }
+
+    function updateScore() {
+      document.getElementById("score").innerText = "Score: " + score;
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
